@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace MyShop.Core.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public string Id { get; set; }
         [DisplayName("Product Name")]
         [Required]
         [StringLength(20)]
@@ -20,10 +19,7 @@ namespace MyShop.Core.Models
         [Range(0,100000)]
         public decimal Price { get; set; }
         public string Image { get; set; }
-        public Product()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
+        
     }
     
     internal class RequiredAttribute : Attribute
