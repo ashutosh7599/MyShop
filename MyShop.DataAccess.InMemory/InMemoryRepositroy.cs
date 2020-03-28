@@ -1,4 +1,5 @@
-﻿using MyShop.Core.Models;
+﻿using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyShop.DataAccess.InMemory
 {
-    public class InMemoryRepositroy<T> where T : BaseEntity
+    public class InMemoryRepositroy<T> : IRepositroy<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
@@ -16,7 +17,7 @@ namespace MyShop.DataAccess.InMemory
         public InMemoryRepositroy()
         {
             items = cache[classname] as List<T>;
-            if(items == null)
+            if (items == null)
             {
                 items = new List<T>();
 
@@ -35,7 +36,7 @@ namespace MyShop.DataAccess.InMemory
         public void Update(T x)
         {
             T tToUpdate = items.Find(i => i.Id == x.Id);
-            if(tToUpdate == null)
+            if (tToUpdate == null)
             {
                 throw new Exception(classname + " Not Found");
             }
@@ -47,7 +48,7 @@ namespace MyShop.DataAccess.InMemory
         public void Delete(string id)
         {
             T tToDelete = items.Find(i => i.Id == id);
-            if(tToDelete == null)
+            if (tToDelete == null)
             {
                 throw new Exception(classname + " Not Found!");
             }
@@ -59,7 +60,7 @@ namespace MyShop.DataAccess.InMemory
         public T Find(string id)
         {
             T tToFind = items.Find(i => i.Id == id);
-            if(tToFind == null)
+            if (tToFind == null)
             {
                 throw new Exception(classname + " Not Found!");
             }

@@ -1,4 +1,5 @@
-﻿using MyShop.Core.Models;
+﻿using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using MyShop.Core.ViewModels;
 using MyShop.DataAccess.InMemory;
 using System;
@@ -11,13 +12,13 @@ namespace MyShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        InMemoryRepositroy<Product> context;
-        InMemoryRepositroy<ProductCategory> productCategories;
+        IRepositroy<Product> context;
+        IRepositroy<ProductCategory> productCategories;
 
-        public ProductManagerController()
+        public ProductManagerController(IRepositroy<Product> productContext, IRepositroy<ProductCategory> productCategoryContext)
         {
-            context = new InMemoryRepositroy<Product>();
-            productCategories = new InMemoryRepositroy<ProductCategory>();
+            context = productContext;
+            productCategories = productCategoryContext;
         }
         // GET: ProductManager
         public ActionResult Index()
