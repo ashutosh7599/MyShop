@@ -52,6 +52,9 @@ namespace MyShop.WebUI
             container.RegisterType<IRepositroy<Basket>, SQLRepository<Basket>>();
             container.RegisterType<IRepositroy<BasketItem>, SQLRepository<BasketItem>>();
             container.RegisterType<IBasketService, BasketService>();
+            container.RegisterType<IRepositroy<Customer>, SQLRepository<Customer>>();
+
+
 
         }
     }
