@@ -2,38 +2,60 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <h1>Products</h1>
 <div class="col-md-2">
     <h4>Filter By Category</h4>
     <div class="list-group">
-        @Html.ActionLink("All","Index",null,new { @class=Request["Category"] == null ? "list-group-item active" : "list-group-item" })
-        @foreach(var cat in Model.ProductCategories)
+        @Html.ActionLink("All", "Index", null, new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" })
+        @foreach (var cat in Model.ProductCategories)
         {
-            @Html.ActionLink(cat.Category, "Index", new { Category = cat.Category }, new { @class=Request["Category"] == cat.Category ? "list-group-item active" : "list-group-item" })
+            @Html.ActionLink(cat.Category, "Index", new { Category = cat.Category }, new { @class = Request["Category"] == cat.Category ? "list-group-item active" : "list-group-item" })
         }
     </div>
 </div>
 <div class="col-md-10">
     @foreach (var item in Model.Product)
     {
-    <div class="col-md-4" style="height:450px;padding:10px;margin:10px;border:solid thin whitesmoke">
-        <div class="col-md-12">
-            <img class="img col-md-12" style="height:250px" src="~/Content/Images/@item.Image" />
+        <div class="col-md-4" style="height:450px;padding:10px;margin:10px;border:solid thin whitesmoke">
+            <div class="col-md-12">
+                <img class="img col-md-12" style="height:250px" src="~/Content/Images/@item.Image" />
+            </div>
+            <div class="col-md-12">
+                <strong>@Html.ActionLink(item.Name, "Details", new { id = item.Id })</strong>
+            </div>
+            <div class="col-md-12">
+                <p>@item.Description</p>
+            </div>
+            <div class="col-md-12">
+                <h4>@item.Price</h4>
+            </div>
+            <div class="col-md-12">
+                <input type="button" class="btn btn-default" id="@item.Id" value="Add To Cart" />
+                <script type="text/javascript">
+                    $(function () {
+                        $("#@item.Id").click(function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "/Basket/AddToBasket",
+                                data: '{Id: "' + "@item.Id" + '" }',
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (response) {
+                                },
+                                failure: function (response) {
+                                  
+                                },
+                                error: function (response) {
+                                    
+                                }
+                            });
+                        });
+                    });
+                </script>
+            </div>
         </div>
-        <div class="col-md-12">
-            <strong>@Html.ActionLink(item.Name,"Details",new { id = item.Id })</strong>
-        </div>
-        <div class="col-md-12">
-            <p>@item.Description</p>
-        </div>
-        <div class="col-md-12">
-            <h4>@item.Price</h4>
-        </div>
-        <div class="col-md-12">
-            <a href="@Url.Action("AddToBasket","Basket",new { Id = item.Id })" class="btn btn-default">Add To Basket</a>
-        </div>
-    </div>
     }
 </div>
 <div class="col-md-12 clearfix"></div>
