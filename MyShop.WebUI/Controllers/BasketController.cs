@@ -1,10 +1,12 @@
 ﻿using MyShop.Core.Contracts;
 using MyShop.Core.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace MyShop.WebUI.Controllers
 {
@@ -37,11 +39,16 @@ namespace MyShop.WebUI.Controllers
             return RedirectToAction("Index");
 
         }
-        public PartialViewResult BasketSummary()
+
+        public JsonResult BasketSummary()
         {
             var basketSummary = basketService.GetBasketSummary(this.HttpContext);
-            return PartialView(basketSummary);
+            
+            return Json(basketSummary);
+
         }
+
+
         [Authorize]
         public ActionResult Checkout()
         {

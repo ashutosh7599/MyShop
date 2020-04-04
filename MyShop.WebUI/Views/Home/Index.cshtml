@@ -5,7 +5,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 <h1>Products</h1>
-<div class="col-md-2">
+<div class="col-md-1">
     <h4>Filter By Category</h4>
     <div class="list-group">
         @Html.ActionLink("All", "Index", null, new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" })
@@ -15,10 +15,10 @@
         }
     </div>
 </div>
-<div class="col-md-10">
+<div class="col-md-11">
     @foreach (var item in Model.Product)
     {
-        <div class="col-md-4" style="height:450px;padding:10px;margin:10px;border:solid thin whitesmoke">
+        <div class="col-md-3" style="height:450px;padding:10px;margin:10px;border:solid thin whitesmoke">
             <div class="col-md-12">
                 <img class="img col-md-12" style="height:250px" src="~/Content/Images/@item.Image" />
             </div>
@@ -43,12 +43,13 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (response) {
+                                    BasketSummaryFetcher();
                                 },
                                 failure: function (response) {
                                   
                                 },
                                 error: function (response) {
-                                    
+                                        
                                 }
                             });
                         });

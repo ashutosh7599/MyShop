@@ -8,7 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
+<body  onload="BasketSummaryFetcher()">
+    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,13 +25,39 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                        <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
-                @{ 
-                    Html.RenderAction("BasketSummary", "Basket");
-                }
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="@Url.Action("Index","Basket")"><div class="cart1"></div></a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","Basket")"><div class="cart2"></div></a>
+                </li>
+
+               
+
+            </ul>
+                <script type="text/javascript">
+                    function BasketSummaryFetcher() {
+                        $.ajax(
+                            {
+                                type: 'post',
+                                url: '/Basket/BasketSummary',
+                                dataType: 'json',
+                                success: function (data) {
+                                    let BasketTotal, BasketCount;
+                                    BasketCount = data.BasketCount;
+                                    BasketTotal = data.BasketTotal;
+                                    $("div.cart1").html(BasketCount + " items");
+                                    $("div.cart2").html("$" + BasketTotal.toFixed(2));
+                                },
+                            });
+                    }
+
+                </script>
             </div>
         </div>
     </div>

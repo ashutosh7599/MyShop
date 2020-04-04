@@ -18,6 +18,7 @@ namespace MyShop.WebUI.Controllers
         {
             context = productContext;
             productCategories = productCategoryContext;
+           
         }
         public ActionResult Index(string Category=null)
         {
