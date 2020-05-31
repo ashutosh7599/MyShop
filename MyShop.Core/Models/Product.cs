@@ -19,6 +19,7 @@ namespace MyShop.Core.Models
         public string Description { get; set; }
         [Range(0,100000)]
         public decimal Price { get; set; }
+        public string suuuu {get;set;}
         public string Image { get; set; }
         public Product()
         {
