@@ -29,22 +29,6 @@ namespace MyShop.WebUI.Controllers
             return View(product);
         }
 
-        [HttpPost]
-        public ActionResult Create(Product product)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(product);
-            }
-            else
-            {
-                context.Insert(product);
-                context.Commit();
-
-                return RedirectToAction("Index");
-            }
-
-        }
 
         public ActionResult Edit(string Id)
         {
